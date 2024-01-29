@@ -112,7 +112,7 @@ namespace ABS
             int zipcode = Convert.ToInt32(Console.ReadLine());
             contact.set_zipcode(zipcode);
             Console.WriteLine("Phone Number");
-            long phonenumber = Convert.ToInt32(Console.ReadLine());
+            long phonenumber = Convert.ToInt64(Console.ReadLine());
             contact.set_phonenumber(phonenumber);
             Console.WriteLine("Email");
             string email = Console.ReadLine();
@@ -129,6 +129,59 @@ namespace ABS
             Console.WriteLine($"Zip Code : {contact.get_ZipCode()}");
             Console.WriteLine($"Phone Number : {contact.get_PhoneNumber()}");
             Console.WriteLine($"Email : {contact.get_Email()}");
+        }
+
+        public void Edit(string Email)
+        {
+            int option;
+            string str;
+            long phno;
+            int n;
+            do
+            {
+                display();
+                Console.WriteLine();
+                Console.WriteLine("Enter which portion to be edited ..");
+                Console.WriteLine("1. FirstName\n2. Last Name\n3. Address\n4. City\n5. State\n6. ZipCode\n7. Phone Number\n8. Email\n9. Done");
+                option = Convert.ToInt32(Console.ReadLine());
+                switch(option)
+                {
+                    case 1: Console.WriteLine("Enter the First New Name : ");
+                            str=Console.ReadLine();
+                            contact.set_firstname(str);
+                            break;
+                    case 2: Console.WriteLine("Enter the Last New Name : ");
+                            str=Console.ReadLine();
+                            contact.set_lastname(str);
+                            break;
+                    case 3: Console.WriteLine("Enter the New Address : ");
+                            str=Console.ReadLine();
+                            contact.set_address(str);
+                            break;
+                    case 4: Console.WriteLine("Enter the New City : ");
+                            str=Console.ReadLine();
+                            contact.set_city(str);
+                            break;
+                    case 5: Console.WriteLine("Enter the New State : ");
+                            str=Console.ReadLine();
+                            contact.set_state(str);
+                            break;
+                    case 6: Console.WriteLine("Enter the New ZipCode : ");
+                            n = Convert.ToInt32(Console.ReadLine());
+                            contact.set_zipcode(n);
+                            break;
+                    case 7: Console.WriteLine("Enter the New Phone Number : ");
+                            phno = Convert.ToInt64(Console.ReadLine());
+                            contact.set_phonenumber(phno);
+                            break;
+                    case 8: Console.WriteLine("Enter the New Email : ");
+                            str=Console.ReadLine();
+                            contact.set_email(str);
+                            break;
+                    case 9: Console.WriteLine("All Edits done..");
+                            break;
+                }
+            }while (option!=9);
         }
         public void DisplayMessage()
         {
@@ -151,7 +204,10 @@ namespace ABS
             Console.WriteLine();
             myobject.AddContact();
             myobject.display();
-
+            Console.WriteLine();
+            Console.WriteLine("Enter the email : ");
+            string email = Console.ReadLine();
+            myobject.Edit(email);
         }
     }
 }
