@@ -5,3 +5,10 @@ C:\Users\Shouvik Das\Dropbox\Desktop\ABS\obj\Debug\ABS.csproj.AssemblyReference.
 C:\Users\Shouvik Das\Dropbox\Desktop\ABS\obj\Debug\ABS.csproj.CoreCompileInputs.cache
 C:\Users\Shouvik Das\Dropbox\Desktop\ABS\obj\Debug\ABS.exe
 C:\Users\Shouvik Das\Dropbox\Desktop\ABS\obj\Debug\ABS.pdb
+C:\Users\Shouvik Das\Dropbox\Desktop\Training\Address-Book-Problem\bin\Debug\ABS.exe.config
+C:\Users\Shouvik Das\Dropbox\Desktop\Training\Address-Book-Problem\bin\Debug\ABS.exe
+C:\Users\Shouvik Das\Dropbox\Desktop\Training\Address-Book-Problem\bin\Debug\ABS.pdb
+C:\Users\Shouvik Das\Dropbox\Desktop\Training\Address-Book-Problem\obj\Debug\ABS.csproj.AssemblyReference.cache
+C:\Users\Shouvik Das\Dropbox\Desktop\Training\Address-Book-Problem\obj\Debug\ABS.csproj.CoreCompileInputs.cache
+C:\Users\Shouvik Das\Dropbox\Desktop\Training\Address-Book-Problem\obj\Debug\ABS.exe
+C:\Users\Shouvik Das\Dropbox\Desktop\Training\Address-Book-Problem\obj\Debug\ABS.pdb
