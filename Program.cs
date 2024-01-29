@@ -85,18 +85,72 @@ namespace ABS
 
     class AddressBookMain
     {
+        Contact contact;
+        public AddressBookMain()
+        {
+            contact = new Contact();
+        }
+
+        public void AddContact()
+        {
+            Console.WriteLine("First Name");
+            string firstname = Console.ReadLine();
+            contact.set_firstname(firstname);
+            Console.WriteLine("Last Name");
+            string lastname = Console.ReadLine();
+            contact.set_lastname(lastname);
+            Console.WriteLine("Address");
+            string address = Console.ReadLine();
+            contact.set_address(address);
+            Console.WriteLine("City");
+            string city = Console.ReadLine();
+            contact.set_city(city);
+            Console.WriteLine("State");
+            string state = Console.ReadLine();
+            contact.set_state(state);
+            Console.WriteLine("ZipCode");
+            int zipcode = Convert.ToInt32(Console.ReadLine());
+            contact.set_zipcode(zipcode);
+            Console.WriteLine("Phone Number");
+            long phonenumber = Convert.ToInt32(Console.ReadLine());
+            contact.set_phonenumber(phonenumber);
+            Console.WriteLine("Email");
+            string email = Console.ReadLine();
+            contact.set_email(email);
+
+        }
+        public void display()
+        {
+            Console.WriteLine($"First Name : {contact.get_firstname()}");
+            Console.WriteLine($"Last Name : {contact.get_lastname()}");
+            Console.WriteLine($"Address : {contact.get_address()}");
+            Console.WriteLine($"City : {contact.get_City()}");
+            Console.WriteLine($"State : {contact.get_State()}");
+            Console.WriteLine($"Zip Code : {contact.get_ZipCode()}");
+            Console.WriteLine($"Phone Number : {contact.get_PhoneNumber()}");
+            Console.WriteLine($"Email : {contact.get_Email()}");
+        }
         public void DisplayMessage()
         {
             Console.WriteLine("Welcome to Address Book Program");
         }
+
     }
+
+
+
+
     internal class Program
     {
         static void Main(string[] args)
         {
+
+
             AddressBookMain myobject = new AddressBookMain();
             myobject.DisplayMessage();
-
+            Console.WriteLine();
+            myobject.AddContact();
+            myobject.display();
 
         }
     }
