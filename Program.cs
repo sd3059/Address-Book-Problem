@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Linq;
+using System.Net.NetworkInformation;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -88,36 +89,38 @@ namespace ABS
     class AddressBookMain
     {
         List<Contact> con;
-        public AddressBookMain()
+        public AddressBookMain(SortedDictionary<string, List<Contact>> address)
         {
             con = new List<Contact>();
+            string str = Console.ReadLine();
+            address[str] = con;
         }
 
         public void AddContact()
         {
             Contact contacts = new Contact();
-            Console.WriteLine("First Name");
+            Console.Write("First Name : ");
             string firstname = Console.ReadLine();
             contacts.set_firstname(firstname);
-            Console.WriteLine("Last Name");
+            Console.Write("Last Name : ");
             string lastname = Console.ReadLine();
             contacts.set_lastname(lastname);
-            Console.WriteLine("Address");
+            Console.Write("Address : ");
             string address = Console.ReadLine();
             contacts.set_address(address);
-            Console.WriteLine("City");
+            Console.Write("City : ");
             string city = Console.ReadLine();
             contacts.set_city(city);
-            Console.WriteLine("State");
+            Console.Write("State : ");
             string state = Console.ReadLine();
             contacts.set_state(state);
-            Console.WriteLine("ZipCode");
+            Console.Write("ZipCode : ");
             int zipcode = Convert.ToInt32(Console.ReadLine());
             contacts.set_zipcode(zipcode);
-            Console.WriteLine("Phone Number");
+            Console.Write("Phone Number : ");
             long phonenumber = Convert.ToInt64(Console.ReadLine());
             contacts.set_phonenumber(phonenumber);
-            Console.WriteLine("Email");
+            Console.Write("Email : ");
             string email = Console.ReadLine();
             contacts.set_email(email);
             con.Add(contacts);
@@ -126,7 +129,7 @@ namespace ABS
         {
             for (int i = 0; i < con.Count; i++)
             {
-                Console.WriteLine($"\nContact : {i+1}\n");
+                Console.WriteLine($"\nContact : {i + 1}\n");
                 Console.WriteLine($"First Name : {con[i].get_firstname()}");
                 Console.WriteLine($"Last Name : {con[i].get_lastname()}");
                 Console.WriteLine($"Address : {con[i].get_address()}");
@@ -139,14 +142,14 @@ namespace ABS
         }
         public void display2(Contact cont)
         {
-                Console.WriteLine($"First Name : {cont.get_firstname()}");
-                Console.WriteLine($"Last Name : {cont.get_lastname()}");
-                Console.WriteLine($"Address : {cont.get_address()}");
-                Console.WriteLine($"City : {cont.get_City()}");
-                Console.WriteLine($"State : {cont.get_State()}");
-                Console.WriteLine($"Zip Code : {cont.get_ZipCode()}");
-                Console.WriteLine($"Phone Number : {cont.get_PhoneNumber()}");
-                Console.WriteLine($"Email : {cont.get_Email()}");
+            Console.WriteLine($"First Name : {cont.get_firstname()}");
+            Console.WriteLine($"Last Name : {cont.get_lastname()}");
+            Console.WriteLine($"Address : {cont.get_address()}");
+            Console.WriteLine($"City : {cont.get_City()}");
+            Console.WriteLine($"State : {cont.get_State()}");
+            Console.WriteLine($"Zip Code : {cont.get_ZipCode()}");
+            Console.WriteLine($"Phone Number : {cont.get_PhoneNumber()}");
+            Console.WriteLine($"Email : {cont.get_Email()}");
         }
 
         public void Edit(string Email)
@@ -157,10 +160,10 @@ namespace ABS
             int n;
             for (int i = 0; i < con.Count; i++)
             {
-                if (con[i].get_Email()==Email)
+                if (con[i].get_Email() == Email)
+                {
+                    do
                     {
-                        do
-                        {
                         Console.Clear();
                         Console.WriteLine();
                         display2(con[i]);
@@ -215,13 +218,13 @@ namespace ABS
                                 break;
                         }
                     } while (option != 9);
-                }    
+                }
             }
         }
         public void delete(string email)
         {
             int flag = 0;
-            for(int i = 0; i < con.Count; i++)
+            for (int i = 0; i < con.Count; i++)
             {
                 if (con[i].get_Email() == email)
                 {
@@ -242,12 +245,16 @@ namespace ABS
                     break;
                 }
             }
-            if(flag == 0)
+            if (flag == 0)
             {
                 Console.WriteLine($"The email id \"{email}\" does not match with any contact");
             }
         }
 
+        public void switching (string name, SortedDictionary<string, List<Contact>> dict)
+        {
+            con=dict[name];
+        }
         public void DisplayMessage()
         {
             Console.WriteLine("Welcome to Address Book Program");
@@ -262,9 +269,10 @@ namespace ABS
     {
         static void Main(string[] args)
         {
-
-
-            AddressBookMain myobject = new AddressBookMain();
+            SortedDictionary<string, List<Contact>> address_books = new SortedDictionary<string, List<Contact>>();
+            Console.WriteLine("Enter the owner of the Address Book : ");
+            AddressBookMain myobject = new AddressBookMain(address_books);
+            Console.Clear();
             int option;
             string email;
             myobject.DisplayMessage();
@@ -272,7 +280,7 @@ namespace ABS
             do
             {
                 Console.Clear();
-                Console.WriteLine("Enter an option from the menu : \n\n1. Add Contact\n2. Display Contacts\n3. Edit Contact\n4. Delete Contact\n5. Exit\n\n");
+                Console.WriteLine("Enter an option from the menu : \n\n1. Add Contact\n2. Display Contacts\n3. Edit Contact\n4. Delete Contact\n5. Add a new address book\n6. Display address books\n7. Switch to another book\n8. Exit\n");
                 option = Convert.ToInt32(Console.ReadLine());
                 switch(option)
                 {
@@ -302,10 +310,42 @@ namespace ABS
                             myobject.delete(email);
                             Thread.Sleep(2000);
                             break;
-                    case 5: Console.WriteLine("Exited ...");
+                    case 5: Console.Clear();
+                            Console.WriteLine("Enter the new address book : ");
+                            myobject = new AddressBookMain(address_books);
+                            Console.WriteLine("New address book has been created ...");
+                            Thread.Sleep(3000);
+                            break;
+                    case 6: Console.Clear();
+                            foreach(KeyValuePair<string, List<Contact>> kvp in address_books)
+                            {
+                                Console.WriteLine($"{kvp.Key} : {kvp.Value.Count} Contacts");
+                            }
+                            Console.WriteLine("\n Press Any Key to go back ...");
+                            Console.ReadKey();
+                            break;
+                    case 7: Console.Clear();
+                            foreach (KeyValuePair<string, List<Contact>> kvp in address_books)
+                            {
+                                Console.WriteLine($"{kvp.Key} : {kvp.Value.Count} Contacts");
+                            }
+                            Console.WriteLine("\nEnter the Address book to switch with ...");
+                            email=Console.ReadLine();
+                            if (address_books.ContainsKey(email))
+                            {
+                                myobject.switching(email, address_books);
+                                Console.WriteLine($"Switched to {email}");
+                            }
+                            else
+                            {
+                                Console.WriteLine("The Specified Address book does not exist ...");
+                            }
+                            Thread.Sleep(3000);
+                            break;
+                    case 8: Console.WriteLine("Exited ...");
                             break;
                 }
-            } while (option != 5);
+            } while (option != 8);
                        
         }
     }
