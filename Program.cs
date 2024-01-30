@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
@@ -136,6 +137,17 @@ namespace ABS
                 Console.WriteLine($"Email : {con[i].get_Email()}");
             }
         }
+        public void display2(Contact cont)
+        {
+                Console.WriteLine($"First Name : {cont.get_firstname()}");
+                Console.WriteLine($"Last Name : {cont.get_lastname()}");
+                Console.WriteLine($"Address : {cont.get_address()}");
+                Console.WriteLine($"City : {cont.get_City()}");
+                Console.WriteLine($"State : {cont.get_State()}");
+                Console.WriteLine($"Zip Code : {cont.get_ZipCode()}");
+                Console.WriteLine($"Phone Number : {cont.get_PhoneNumber()}");
+                Console.WriteLine($"Email : {cont.get_Email()}");
+        }
 
         public void Edit(string Email)
         {
@@ -149,7 +161,10 @@ namespace ABS
                     {
                         do
                         {
-                            Console.WriteLine();
+                        Console.Clear();
+                        Console.WriteLine();
+                        display2(con[i]);
+                        Console.WriteLine();
                         Console.WriteLine("Enter which portion to be edited ..");
                         Console.WriteLine("1. FirstName\n2. Last Name\n3. Address\n4. City\n5. State\n6. ZipCode\n7. Phone Number\n8. Email\n9. Done");
                         option = Convert.ToInt32(Console.ReadLine());
@@ -203,7 +218,35 @@ namespace ABS
                 }    
             }
         }
-        
+        public void delete(string email)
+        {
+            int flag = 0;
+            for(int i = 0; i < con.Count; i++)
+            {
+                if (con[i].get_Email() == email)
+                {
+                    Console.Clear();
+                    display2(con[i]);
+                    Console.WriteLine("Do you want to delete this Contact : (Y/N)");
+                    string str = Console.ReadLine();
+                    if (str == "y" || str == "Y")
+                    {
+                        con.Remove(con[i]);
+                        Console.WriteLine("Contact has been deleted ...");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Contact is not deleted ...");
+                    }
+                    flag = 1;
+                    break;
+                }
+            }
+            if(flag == 0)
+            {
+                Console.WriteLine($"The email id \"{email}\" does not match with any contact");
+            }
+        }
 
         public void DisplayMessage()
         {
@@ -222,17 +265,48 @@ namespace ABS
 
 
             AddressBookMain myobject = new AddressBookMain();
+            int option;
+            string email;
             myobject.DisplayMessage();
-            Console.WriteLine();
-            myobject.AddContact();
-            myobject.display();
-            Console.WriteLine();
-            myobject.display();
-            Console.WriteLine("\nEnter the email : ");
-            string email = Console.ReadLine();
-            myobject.Edit(email);
-
-            
+            Thread.Sleep(2000);
+            do
+            {
+                Console.Clear();
+                Console.WriteLine("Enter an option from the menu : \n\n1. Add Contact\n2. Display Contacts\n3. Edit Contact\n4. Delete Contact\n5. Exit\n\n");
+                option = Convert.ToInt32(Console.ReadLine());
+                switch(option)
+                {
+                    case 1: Console.Clear();
+                            myobject.AddContact();
+                            Console.Clear();
+                            Console.WriteLine("Contact Added Successfully ...");
+                            Thread.Sleep(2000);
+                            break;
+                    case 2: Console.Clear();
+                            myobject.display();
+                            Console.WriteLine("\nPress any key to go back ...");
+                            Console.ReadKey();
+                            break;
+                    case 3: Console.Clear();
+                            myobject.display();
+                            Console.WriteLine("\nEnter the email of the contact to edit : ");
+                            email= Console.ReadLine();
+                            myobject.Edit(email);
+                            Console.WriteLine("Contact Edited ...");
+                            Thread.Sleep(2000);
+                            break;
+                    case 4: Console.Clear();
+                            myobject.display();
+                            Console.WriteLine("\nEnter the email of the contact to be deleted : ");
+                            email = Console.ReadLine();
+                            myobject.delete(email);
+                            Thread.Sleep(2000);
+                            break;
+                    case 5: Console.WriteLine("Exited ...");
+                            break;
+                }
+            } while (option != 5);
+                       
         }
     }
 }
